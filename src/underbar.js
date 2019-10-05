@@ -104,9 +104,12 @@
   _.uniq = function(array, isSorted, iterator) {
     var result = [];
     if (arguments.length === 3) {
+      // For iterators, keep track of calculated values versus original values. If the iterator generates a new calculated value, add the original value to the results array.
+      var calculated = [];
       for (var i = 0; i < array.length; i++) {
-        if (!_.contains(result, iterator(array[i]))) {
-          result.push(iterator(array[i]));
+        if (!_.contains(calculated, iterator(array[i]))) {
+          result.push(array[i]);
+          calculated.push(iterator(array[i]));
         }
       }
     } else {
